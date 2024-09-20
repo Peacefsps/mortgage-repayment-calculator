@@ -1,8 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Homepage.css';
 import Illustration from '../images/Illustration.svg'
 
 export default function Homepage() {
+    const [selectedOption, setSelectedOption] = useState(null)
+    const [formData, setFormData] = useState({
+          amount: "",
+          term: "",
+          rate: "",
+          mortgage: "",
+        });
+    const [errors, setErrors] = useState({
+      amount: "",
+      term: "",
+      rate: "",
+      mortgage: "",
+    });
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+            setFormData({
+                ...formData,
+                [name]: value
+            })
+    }
+    const validateForm = () => {
+        let formIsValid = true;
+        const newErrors = {};
+
+        if (!formData.amount) {
+            formIsValid = true;
+            newErrors.amount = 'This field is required';
+        }
+        if (!formData.term) {
+           formIsValid = true;
+           newErrors.term = "This field is required";
+        }
+        if (!formData.rate) {
+            formIsValid = true;
+            newErrors.rate = "This field is required";
+        }
+        if (!formData.mortgage) {
+             formIsValid = true;
+             newErrors.mortgage = "This field is required";
+        }
+        setErrors(newErrors);
+        return formIsValid;
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            console.log('Form is submitted', formData)
+        }
+    }
+    const handleOptionChange = (option) => {
+      setSelectedOption(option);
+    };
     return (
       <div className="Homepage">
         <div className="calculator-container">
@@ -13,28 +65,79 @@ export default function Homepage() {
           <form className="form">
             <div className="mortgage-box">
               <label>Mortgage Amount</label>
-              <input type="text" />
+              <div className="amt-box">
+                <input
+                  type="text"
+                  style={{ paddingLeft: "36px" }}
+                  name="amount"
+                  id="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                />
+              </div>
+              {errors.amount && <span className="errors">{errors.amount}</span>}
             </div>
             <div className="second-div">
               <div className="mortgage-box">
                 <label>Mortgage Term</label>
-                <input type="text" />
+                <div className="term-box content-box">
+                  <input
+                    type="text"
+                    name="term"
+                    value={formData.term}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.term && <span className="errors">{errors.term}</span>}
               </div>
               <div className="mortgage-box">
                 <label>Interest Rate</label>
-                <input type="text" />
+                <div className="rate-box content-box">
+                  <input
+                    type="text"
+                    name="rate"
+                    value={formData.rate}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.rate && <span className="errors">{errors.rate}</span>}
               </div>
             </div>
+            <div>
             <label>Mortgage Type</label>
-            <div className="mortgage-type">
-              <input type="radio" />
-              <label>Repayment</label>
+            <div
+              className={`mortgage-type ${
+                selectedOption === "option1" ? "active" : ""
+              }`}
+            >
+              <input
+                type="radio"
+                id="option1"
+                value="option1"
+                name="mortgage"
+                onChange={() => handleOptionChange("option1")}
+                checked={selectedOption === "option1"}
+              />
+              <label htmlFor="option1">Repayment</label>
             </div>
-            <div className="mortgage-type">
-              <input type="radio" />
-              <label>Repayment</label>
+            <div
+              className={`mortgage-type ${
+                selectedOption === "option2" ? "active" : ""
+              }`}
+            >
+              <input
+                type="radio"
+                id="option2"
+                name="mortgage"
+                value="option2"
+                onChange={() => handleOptionChange("option2")}
+                checked={selectedOption === "option2"}
+              />
+              <label htmlFor="option2">Interest Only</label>
             </div>
-            <button>
+             {errors.term && <span className="errors">{errors.term}</span>}
+            </div>
+            <button onClick={handleSubmit}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
