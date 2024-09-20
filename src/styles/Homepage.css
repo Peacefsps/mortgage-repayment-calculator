@@ -34,6 +34,7 @@ button {
     background: white;
     width: fit-content;
     margin-top: 5%;
+    margin-bottom: 30px;
     border-radius: 24px;
 }
 .calculator-container {
@@ -59,9 +60,6 @@ button {
     display: flex;
     flex-direction: column;
 }
-.mortgage-box > label {
-    margin-bottom: 8px;
-}
 .second-div {
     display: flex;
     gap: 10px;
@@ -73,14 +71,14 @@ button {
     position: relative;
 }
 .amt-box::before {
-    content: '$';
+    content: '£';
     background-color: hsl(202, 86%, 94%);
     position: absolute;
     text-align: center;
     color: hsl(202, 55%, 16%);
     padding: 4px 10px;
     height: 23px;
-    bottom: 11px;
+    bottom: 9px;
     left: 0.8px;
     transition: border-color 0.3s;
 }
@@ -91,9 +89,10 @@ button {
     color: hsl(202, 55%, 16%);
     padding: 4px 6px;
     height: 23px;
-    bottom: 11px;
+    bottom: 9px;
     right: 0.6px;
     transition: border-color 0.3s;
+    
 }
 .term-box::after {
     content: "years";
@@ -103,12 +102,13 @@ button {
 }
 .term-box > input[type=text], .rate-box > input[type=text], .amt-box > input[type=text] {
     margin-bottom: 8px;
+    margin-top: 6px;
     padding: 8px 12px;
     border: 1px solid hsla(202, 55%, 16%, 0.5);
     cursor: pointer;
     width: 100%;
+    /* border-radius: 4px; */
 }
-
 .term-box > input[type=text]:hover, .rate-box > input[type=text]:hover, .amt-box > input[type=text]:hover {
     border-color: var(--secondary-color);
 }
@@ -118,6 +118,19 @@ button {
 .term-box > input[type=text]:focus, .rate-box > input[type=text]:focus, .amt-box > input[type=text]:focus {
     outline: transparent;
     border-color: var(--primary-color);
+}
+.term-box > input[type=text].input-error, .rate-box > input[type=text].input-error, .amt-box > input[type=text].input-error {
+    border-color: var(--error-color);
+}
+.term-box.input-error::after, .rate-box.input-error::after, .amt-box.input-error::before {
+    background-color: var(--error-color);
+    color: white;
+}
+.errors {
+    color: var(--error-color);
+    font-size: 12px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 .mortgage-type {
     border: 1px solid var(--body-color);
@@ -146,9 +159,7 @@ button {
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 .mortgage-type input[type=radio]:checked {
-    /* background-color: var(--primary-color); */
     border-color: var(--primary-color);
-    /* padding: 4px; */
 }
 .mortgage-type input[type=radio]:checked::before {
     content: '';
@@ -167,14 +178,8 @@ button {
     font-weight: bold;
 }
 .mortgage-type.active {
-    /* outline: 2px solid var(--primary-color); */
     border-color: var(--primary-color);
     background-color: hsla(61, 70%, 52%, 0.1);;
-}
-.errors {
-    color: var(--error-color);
-    font-size: 12px;
-    margin-bottom: 8px;
 }
 .form > button {
     background-color: var(--primary-color);
@@ -186,7 +191,7 @@ button {
     font-weight: bold;
     border-radius: 26px;
     gap: 5px;
-    margin-top: 20px;
+    margin-top: 16px;
 }
 .form > button:hover {
     background-color: hsla(61, 70%, 52%, 0.5);

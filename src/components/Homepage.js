@@ -64,13 +64,14 @@ export default function Homepage() {
           </div>
           <form className="form">
             <div className="mortgage-box">
-              <label>Mortgage Amount</label>
-              <div className="amt-box">
+              <label htmlFor="amount">Mortgage Amount</label>
+              <div className={`amt-box ${errors.amount ? "input-error" : ""}`}>
                 <input
                   type="text"
                   style={{ paddingLeft: "36px" }}
                   name="amount"
                   id="amount"
+                  className={errors.amount ? "input-error" : ""}
                   value={formData.amount}
                   onChange={handleChange}
                 />
@@ -80,23 +81,33 @@ export default function Homepage() {
             <div className="second-div">
               <div className="mortgage-box">
                 <label>Mortgage Term</label>
-                <div className="term-box content-box">
+                <div
+                  className={`term-box content-box ${
+                    errors.term ? "input-error" : ""
+                  } `}
+                >
                   <input
                     type="text"
                     name="term"
                     value={formData.term}
                     onChange={handleChange}
+                    className={errors.term ? "input-error" : ""}
                   />
                 </div>
                 {errors.term && <span className="errors">{errors.term}</span>}
               </div>
               <div className="mortgage-box">
                 <label>Interest Rate</label>
-                <div className="rate-box content-box">
+                <div
+                  className={`rate-box content-box ${
+                    errors.rate ? "input-error" : ""
+                  } `}
+                >
                   <input
                     type="text"
                     name="rate"
                     value={formData.rate}
+                    className={errors.rate ? "input-error" : ""}
                     onChange={handleChange}
                   />
                 </div>
@@ -104,38 +115,38 @@ export default function Homepage() {
               </div>
             </div>
             <div>
-            <label>Mortgage Type</label>
-            <div
-              className={`mortgage-type ${
-                selectedOption === "option1" ? "active" : ""
-              }`}
-            >
-              <input
-                type="radio"
-                id="option1"
-                value="option1"
-                name="mortgage"
-                onChange={() => handleOptionChange("option1")}
-                checked={selectedOption === "option1"}
-              />
-              <label htmlFor="option1">Repayment</label>
-            </div>
-            <div
-              className={`mortgage-type ${
-                selectedOption === "option2" ? "active" : ""
-              }`}
-            >
-              <input
-                type="radio"
-                id="option2"
-                name="mortgage"
-                value="option2"
-                onChange={() => handleOptionChange("option2")}
-                checked={selectedOption === "option2"}
-              />
-              <label htmlFor="option2">Interest Only</label>
-            </div>
-             {errors.term && <span className="errors">{errors.term}</span>}
+              <label>Mortgage Type</label>
+              <div
+                className={`mortgage-type ${
+                  selectedOption === "option1" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  id="option1"
+                  value="option1"
+                  name="mortgage"
+                  onChange={() => handleOptionChange("option1")}
+                  checked={selectedOption === "option1"}
+                />
+                <label htmlFor="option1">Repayment</label>
+              </div>
+              <div
+                className={`mortgage-type ${
+                  selectedOption === "option2" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  id="option2"
+                  name="mortgage"
+                  value="option2"
+                  onChange={() => handleOptionChange("option2")}
+                  checked={selectedOption === "option2"}
+                />
+                <label htmlFor="option2">Interest Only</label>
+              </div>
+              {errors.term && <span className="errors">{errors.term}</span>}
             </div>
             <button onClick={handleSubmit}>
               <svg
