@@ -4,6 +4,7 @@ import Illustration from '../images/Illustration.svg'
 
 export default function Homepage() {
     const [selectedOption, setSelectedOption] = useState(null)
+    const [displayResult, setDisplayResult] = useState(false)
     const [formData, setFormData] = useState({
           amount: "",
           term: "",
@@ -16,12 +17,20 @@ export default function Homepage() {
       rate: "",
       mortgage: "",
     });
+    const [result, setResult] = useState({monthlyPayment: null, totalPayment: null})
     const handleChange = (e) => {
-        const {name, value} = e.target;
-            setFormData({
-                ...formData,
-                [name]: value
-            })
+      const { name, value } = e.target;
+      // Remove commas from the input value for storing in the state
+      const rawValue = value.replace(/,/g, "");
+
+      if (!isNaN(rawValue) || rawValue === "") {
+        const formattedValue = new Intl.NumberFormat().format(rawValue)
+        setFormData({
+          ...formData,
+          [name]: formattedValue,
+        });
+      }
+      
     }
     const validateForm = () => {
         let formIsValid = true;
@@ -49,18 +58,62 @@ export default function Homepage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log('Form is submitted', formData)
+            calculateMortgage()
         }
+        setDisplayResult(true)
     }
     const handleOptionChange = (option) => {
       setSelectedOption(option);
     };
+    const calculateMortgage = () => {
+        const principal = parseFloat(formData.amount.replace(/,/g, ''));
+        const years = parseFloat(formData.term.replace(/,/g, ""));
+        const annualRate = parseFloat(formData.rate) / 100;
+
+        const monthlyRate = annualRate / 12;
+        const numberOfPayments = years * 12;
+
+        const monthlyPayment = (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1+ monthlyRate, numberOfPayments) - 1);
+
+        const totalPayment = monthlyPayment * numberOfPayments
+
+        setResult({
+          monthlyPayment: monthlyPayment.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
+          totalPayment: totalPayment.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }),
+        });
+    }
+    const resetForm = () => {
+        setFormData({
+          amount: "",
+          term: "",
+          rate: "",
+          mortgage: "",
+        });
+          setErrors({
+            amount: "",
+            term: "",
+            rate: "",
+            mortgage: "",
+          });
+           setResult({
+             monthlyPayment: null,
+             totalPayment: null,
+           });
+           setDisplayResult(false);
+           setSelectedOption(null);
+    }
     return (
       <div className="Homepage">
         <div className="calculator-container">
           <div className="heading">
             <h1>Mortgage Calculator</h1>
-            <a href="name.com">Clear All</a>
+            <button href="#" onClick={resetForm}>Clear All</button>
           </div>
           <form className="form">
             <div className="mortgage-box">
@@ -74,6 +127,7 @@ export default function Homepage() {
                   className={errors.amount ? "input-error" : ""}
                   value={formData.amount}
                   onChange={handleChange}
+                  //   onChange={inputAmount}
                 />
               </div>
               {errors.amount && <span className="errors">{errors.amount}</span>}
@@ -165,14 +219,32 @@ export default function Homepage() {
             </button>
           </form>
         </div>
-        <div className="calculator-summary">
-          <img src={Illustration} alt="illustration-repayment" />
-          <h2>Results shown here</h2>
-          <p>
-            Complete the form and click "calculate repayments" to see what your
-            monthly repayments would be.
-          </p>
-        </div>
+        {!displayResult && (
+          <div className="calculator-summary">
+            <img src={Illustration} alt="illustration-repayment" />
+            <h2>Results shown here</h2>
+            <p>
+              Complete the form and click "calculate repayments" to see what
+              your monthly repayments would be.
+            </p>
+          </div>
+        )}
+        {displayResult && (
+          <div className="calculator-result">
+            <h2>Your results</h2>
+            <p>
+              Your results are shown below based on the information you
+              provided. To adjust the results, edit the form and click
+              "calculate repayments" again.
+            </p>
+            <div className="mortgage-values">
+              <h3>Your monthly repayments</h3>
+              <h4>${result.monthlyPayment}</h4>
+              <p>Total you'll repay over the term</p>
+              <h5>${result.totalPayment}</h5>
+            </div>
+          </div>
+        )}
       </div>
     );
 }
