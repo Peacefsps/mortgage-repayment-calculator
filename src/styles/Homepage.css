@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 :root {
     --primary-color: hsl(61, 70%, 52%);
     --error-color: hsl(4, 69%, 50%);
@@ -21,6 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0 100px;
+    font-family: "Plus Jakarta Sans", sans-serif;
 }
 html {
     font-size: 16px;
