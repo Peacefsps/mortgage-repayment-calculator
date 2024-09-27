@@ -17,11 +17,10 @@ img {
 }
 body {
     background: hsl(202, 86%, 94%);
-    height: fit-content;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 100px;
     font-family: "Plus Jakarta Sans", sans-serif;
 }
 html {
@@ -38,11 +37,7 @@ button {
     justify-content: center;
     background: white;
     width: fit-content;
-    margin-top: 5%;
-    margin-bottom: 30px;
     border-radius: 24px;
-    /* margin-left: 20%;
-    margin-right: 20%; */
 }
 .calculator-container {
     padding: 24px;
@@ -110,7 +105,7 @@ button {
 .rate-box::after {
     content: "%";
 }
-.term-box > input[type=text], .rate-box > input[type=text], .amt-box > input[type=text] {
+.term-box > input[type=number], .rate-box > input[type=number], .amt-box > input[type=text] {
     margin-bottom: 8px;
     margin-top: 6px;
     padding: 8px 12px;
@@ -119,17 +114,17 @@ button {
     width: 100%;
     /* border-radius: 4px; */
 }
-.term-box > input[type=text]:hover, .rate-box > input[type=text]:hover, .amt-box > input[type=text]:hover {
+.term-box > input[type=]:hover, .rate-box > input[type=number]:hover, .amt-box > input[type=text]:hover {
     border-color: var(--secondary-color);
 }
 .term-box:focus-within::after, .rate-box:focus-within::after, .amt-box:focus-within::before {
     background-color: var(--primary-color);
 }
-.term-box > input[type=text]:focus, .rate-box > input[type=text]:focus, .amt-box > input[type=text]:focus {
+.term-box > input[type=number]:focus, .rate-box > input[type=number]:focus, .amt-box > input[type=text]:focus {
     outline: transparent;
     border-color: var(--primary-color);
 }
-.term-box > input[type=text].input-error, .rate-box > input[type=text].input-error, .amt-box > input[type=text].input-error {
+.term-box > input[type=number].input-error, .rate-box > input[type=number].input-error, .amt-box > input[type=text].input-error {
     border-color: var(--error-color);
 }
 .term-box.input-error::after, .rate-box.input-error::after, .amt-box.input-error::before {

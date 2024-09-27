@@ -113,7 +113,9 @@ export default function Homepage() {
         <div className="calculator-container">
           <div className="heading">
             <h1>Mortgage Calculator</h1>
-            <button href="#" onClick={resetForm}>Clear All</button>
+            <button href="#" onClick={resetForm}>
+              Clear All
+            </button>
           </div>
           <form className="form">
             <div className="mortgage-box">
@@ -141,7 +143,7 @@ export default function Homepage() {
                   } `}
                 >
                   <input
-                    type="text"
+                    type="number"
                     name="term"
                     value={formData.term}
                     onChange={handleChange}
@@ -158,11 +160,12 @@ export default function Homepage() {
                   } `}
                 >
                   <input
-                    type="text"
+                    type="number"
                     name="rate"
                     value={formData.rate}
                     className={errors.rate ? "input-error" : ""}
                     onChange={handleChange}
+                    step="0.01"
                   />
                 </div>
                 {errors.rate && <span className="errors">{errors.rate}</span>}
